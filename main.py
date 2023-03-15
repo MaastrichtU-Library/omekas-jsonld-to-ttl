@@ -16,7 +16,7 @@ if __name__ == '__main__':
 
     for t in tqdm(types):
         page = 1
-        url = cfg.omekas_api_url + "/" + t
+        url = cfg.omekas_api_url + "/" + t + cfg.api_filter_query
         while url:
             filename = f"{cfg.input_dir}/{t}-{page}.json"
             response = requests.get(url)
