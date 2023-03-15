@@ -2,8 +2,9 @@ from tqdm import tqdm
 import requests
 import json
 from pathlib import Path
-from rdflib import Graph, Literal, Namespace, URIRef
+from rdflib import Graph
 
+# Import values from the config file
 import config as cfg
 
 
