@@ -10,6 +10,12 @@ import config as cfg
 
 if __name__ == '__main__':
 
+    # Folders
+    json_dir = cfg.output_dir + "omekas_json"
+    ttl_dir = cfg.output_dir + "triples_ttl"
+    Path(json_dir).mkdir(parents=True, exist_ok=True)
+    Path(ttl_dir).mkdir(parents=True, exist_ok=True)
+
     # Harvest data from Omeka
     types = cfg.api_endpoints
 
@@ -19,7 +25,7 @@ if __name__ == '__main__':
         page = 1
         url = cfg.omekas_api_url + "/" + t + cfg.api_filter_query
         while url:
-            filename = f"{cfg.input_dir}/{t}-{page}.json"
+            filename = f"{json_dir}/{t}-{page}.json"
             response = requests.get(url)
             json.dump(response.json(), open(filename, "w"), indent=2)
             next = response.links.get("next")
@@ -29,8 +35,8 @@ if __name__ == '__main__':
     print("Download ready")
 
     # Convert JSON-LD to Turtle
-    input_files = list(Path(cfg.input_dir).rglob("*.json"))
-    output_filename = cfg.output_dir + "/omekas.ttl"
+    input_files = list(Path(json_dir).rglob("*.json"))
+    output_filename = ttl_dir + "/omekas.ttl"
 
     # add all json files to one graph
     g = Graph()
